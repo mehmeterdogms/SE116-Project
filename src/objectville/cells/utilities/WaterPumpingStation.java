@@ -1,8 +1,10 @@
 package objectville.cells.utilities;
 
+import objectville.cells.Position;
+
 public class WaterPumpingStation extends UtilityProvider {
     //Without parameters.
-    public WaterPumpingStation() {
+    public WaterPumpingStation(Position position) {
     }
 
     @Override

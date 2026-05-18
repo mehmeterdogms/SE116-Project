@@ -1,8 +1,10 @@
 package objectville.cells.utilities;
 
+import objectville.cells.Position;
+
 public class InternetHub extends UtilityProvider {
     //Without parameters.
-    public InternetHub() {
+    public InternetHub(Position position) {
     }
 
     @Override
