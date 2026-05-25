@@ -5,6 +5,33 @@ import objectville.cells.Position;
 
 public abstract class Zone implements Cell {
 
+    //These fields and methods are added for ServiceManager (
+    private boolean hasSchool;
+    private boolean hasHospital;
+    private boolean hasPoliceStation;
+
+    public boolean HasSchool() { return hasSchool; }
+
+    public void setHasSchool(boolean hasSchool) {
+        this.hasSchool = hasSchool;
+    }
+
+    public boolean HasHospital() {
+        return hasHospital;
+    }
+
+    public void setHasHospital(boolean hasHospital) {
+        this.hasHospital = hasHospital;
+    }
+
+    public boolean HasPoliceStation() {
+        return hasPoliceStation;
+    }
+
+    public void setHasPoliceStation(boolean hasPoliceStation) {
+        this.hasPoliceStation = hasPoliceStation;
+    }
+// )
     protected int level = 0; // Starts from 0
 
     public  int getLevel() {

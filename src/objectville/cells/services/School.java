@@ -9,7 +9,7 @@ public class School extends ServiceBuilding {
     }
 
     @Override
-    String getServiceType() {
+    public String getServiceType() {
         return "Education";
     }
 }

@@ -9,7 +9,7 @@ public class Hospital extends ServiceBuilding {
     }
 
     @Override
-    String getServiceType() {
+    public String getServiceType() {
         return "Health";
     }
 }

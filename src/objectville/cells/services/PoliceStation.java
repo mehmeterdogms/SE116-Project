@@ -9,7 +9,7 @@ public class PoliceStation extends ServiceBuilding {
     }
 
     @Override
-    String getServiceType() {
+    public String getServiceType() {
         return "Security";
     }
 }

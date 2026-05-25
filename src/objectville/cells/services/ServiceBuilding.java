@@ -15,7 +15,7 @@ public abstract class ServiceBuilding implements Cell {
     }
 
     // Returns the type of service this building provides
-    abstract String getServiceType();
+    public abstract String getServiceType();
 
     // Returns the radius of effect for this service building
     public int getRadius() {
