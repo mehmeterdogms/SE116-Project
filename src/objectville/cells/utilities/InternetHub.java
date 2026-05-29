@@ -5,8 +5,8 @@ import objectville.cells.Position;
 public class InternetHub extends UtilityProvider {
     //Without parameters.
     public InternetHub(Position position) {
+        super(position);
     }
-
     @Override
     public String getProvidedUtilityType() {
         return "Internet";//Provide type.

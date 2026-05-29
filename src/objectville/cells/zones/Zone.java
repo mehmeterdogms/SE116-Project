@@ -4,6 +4,28 @@ import objectville.cells.Cell;
 import objectville.cells.Position;
 
 public abstract class Zone implements Cell {
+    //zones wanted amounds at least 1
+    protected int neededElectricity = 1;
+    protected int neededWater = 1;
+    protected int neededInternet = 1;
+
+    //the amound zones have taken
+    protected int takenElectricity = 0;
+    protected int takenWater = 0;
+    protected int takenInternet = 0;
+
+    //the amounds zones created
+    protected int givenPopulation = 0;
+    protected int givenLifeStyle =0;
+    protected int givenGoods = 0;
+
+    //the min taken value of that tick
+    protected int m=0;
+
+    protected Position position;
+    public Zone(Position position){
+        this.position = position;
+    }
 
     //These fields and methods are added for ServiceManager (
     private boolean hasSchool;
@@ -31,7 +53,6 @@ public abstract class Zone implements Cell {
     public void setHasPoliceStation(boolean hasPoliceStation) {
         this.hasPoliceStation = hasPoliceStation;
     }
-// )
     protected int level = 0; // Starts from 0
 
     public  int getLevel() {
@@ -53,7 +74,7 @@ public abstract class Zone implements Cell {
 
     @Override
     public Position getPosition() {
-        return null;
+        return this.position;
     }
     @Override
     public boolean isPassable() {
@@ -61,7 +82,129 @@ public abstract class Zone implements Cell {
     }
     @Override
     public void updateState(){  // will be filled in the future by upcoming parts of the simulation.
+    }
 
+    public int getNeededElectricity() {
+        // this code is made for not update manually needed utilities
+        //if level is 0 we want 1
+        if (this.level == 0) {
+            return 1;
+        }
+
+        if (this instanceof Industrial) {
+            return Math.max(1, this.givenGoods);
+        } else if (this instanceof Housing) {
+            return Math.max(1, this.givenPopulation);
+        } else if (this instanceof Commercial) {
+            return Math.max(1, this.givenLifeStyle);
+        }
+        return 1; // for any kind of mistake in the code and crashes
+    }
+
+    public void setNeededElectricity(int neededElectricity) {
+        this.neededElectricity = neededElectricity;
+    }
+
+    public int getNeededWater() {
+        // this code is made for not update manually needed utilities
+        //if level is 0 we want 1
+        if (this.level == 0) {
+            return 1;
+        }
+
+        if (this instanceof Industrial) {
+            return Math.max(1, this.givenGoods);
+        } else if (this instanceof Housing) {
+            return Math.max(1, this.givenPopulation);
+        } else if (this instanceof Commercial) {
+            return Math.max(1, this.givenLifeStyle);
+        }
+
+        return 1;// for any kind of mistake in the code and crashes
+    }
+
+    public void setNeededWater(int neededWater) {
+        this.neededWater = neededWater;
+    }
+
+    public int getNeededInternet() {
+        // this code is made for not update manually needed utilities
+        //if level is 0 we want 1
+        if (this instanceof Industrial) { //Industrial do not use Internet
+            return 0;
+        }
+
+        if (this.level == 0) {
+            return 1;
+        }
+
+        if (this instanceof Housing) {
+            return Math.max(1, this.givenPopulation);
+        } else if (this instanceof Commercial) {
+            return Math.max(1, this.givenLifeStyle);
+        }
+
+        return 1;// for any kind of mistake in the code and crashes
+    }
+
+    public void setNeededInternet(int neededInternet) {
+        this.neededInternet = neededInternet;
+    }
+
+    public int getTakenElectricity() {
+        return takenElectricity;
+    }
+
+    public void setTakenElectricity(int takenElectricity) {
+        this.takenElectricity = takenElectricity;
+    }
+
+    public int getTakenWater() {
+        return takenWater;
+    }
+
+    public void setTakenWater(int takenWater) {
+        this.takenWater = takenWater;
+    }
+
+    public int getTakenInternet() {
+        return takenInternet;
+    }
+
+    public void setTakenInternet(int takenInternet) {
+        this.takenInternet = takenInternet;
+    }
+
+    public int getGivenPopulation() {
+        return givenPopulation;
+    }
+
+    public void setGivenPopulation(int givenPopulation) {
+        this.givenPopulation = givenPopulation;
+    }
+
+    public int getGivenLifeStyle() {
+        return givenLifeStyle;
+    }
+
+    public void setGivenLifeStyle(int givenLifeStyle) {
+        this.givenLifeStyle = givenLifeStyle;
+    }
+
+    public int getGivenGoods() {
+        return givenGoods;
+    }
+
+    public void setGivenGoods(int givenGoods) {
+        this.givenGoods = givenGoods;
+    }
+
+    public int getM() {
+        return m;
+    }
+
+    public void setM(int m) {
+        this.m = m;
     }
 
 

@@ -1,14 +1,31 @@
 package objectville.cells.zones;
+import objectville.cells.Position;
+public class Commercial extends Zone {
+    public Commercial(Position position) {
+        super(position);
 
-public class Commercial extends Zone{
+    }
+
     @Override
-    public int calculateM(){
-        return 0;
+    public int calculateM() {
+        // commercial zones needs all three utilities
+        int minElcWat = Math.min(takenElectricity, takenWater);
+        this.m =Math.min(minElcWat, takenInternet);
+        return this.m;
     }
 
     @Override
     public void calculateOutput(){
-        //generate Lifestyle based on level and 'm'
+        // Making sure about m is done before calculateOutput
+        calculateM();
+        //if level is 0 there is no LifeStyle
+        if (this.level== 0) {
+            this.givenLifeStyle =0;
+        } else {
+            // LifeStyle formula is level * m
+            this.givenLifeStyle = this.level * this.m;
+        }
+
     }
 
     @Override

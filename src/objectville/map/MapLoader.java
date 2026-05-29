@@ -8,10 +8,21 @@ import java.util.List;
 
 import objectville.cells.Cell;
 import objectville.cells.Position;
+//utilities
 import objectville.cells.utilities.PowerPlant;
 import objectville.cells.utilities.WaterPumpingStation;
 import objectville.cells.utilities.InternetHub;
-
+//infrastructure & empty
+import objectville.cells.infrastructure.Road;
+import objectville.cells.zones.EmptyCell;
+//services
+import objectville.cells.services.Hospital;
+import objectville.cells.services.PoliceStation;
+import objectville.cells.services.School;
+//Zones
+import objectville.cells.zones.Housing;
+import objectville.cells.zones.Industrial;
+import objectville.cells.zones.Commercial;
 
 public class MapLoader {
 
@@ -34,7 +45,9 @@ public class MapLoader {
 
                 //ignores empty lines to not create invalid rows
                 if (!line.isEmpty()) {
-                    char[] tokens = line.toCharArray();
+                    //if there are any space in txt we must skip or the least code (unknown cell = empty cell)
+                    //will be used, it will be wrong
+                    char[] tokens = line.replace(" ", "").toCharArray();
                     lines.add(tokens);
                 }
             }
@@ -70,7 +83,7 @@ public class MapLoader {
               if ( c < tokens.length) {
                   symbol = tokens[c];
               }
-              Position position = new Position(c,r);
+              Position position = new Position(r,c);
               gameMap[r][c] = createCell(symbol,position);
           }
         }
@@ -87,7 +100,36 @@ public class MapLoader {
         } else if (symbol == 'T'){
             return new InternetHub(position);
         }
-        return null; // going to change after other building types
+        // Infrastructure & Empty Cells
+        else if (symbol =='R') {
+            return new Road(position);
+        } else if (symbol == 'E') {
+            return new EmptyCell(position);
+        }
+
+        // services
+        else if (symbol == 'D'){
+            return new Hospital(position);
+        } else if (symbol == 'F') {
+            return new PoliceStation(position);
+        } else if (symbol =='S'){
+            return new School(position);
+        }
+
+        // Zones
+        else if (symbol =='H'){
+            return new Housing(position);
+        } else if (symbol =='I'){
+            return new Industrial(position);
+        } else if (symbol =='C'){
+            return new Commercial(position);
+        }
+
+
+        // Returning an EmptyCell if the symbol is unknown for solving possible errors could change later, not needed
+        else {
+            return new EmptyCell(position);
+        }
 
     }
 }

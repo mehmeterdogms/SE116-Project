@@ -6,9 +6,11 @@ import objectville.cells.Position;
 public abstract class UtilityProvider implements Cell {
     //The game rule capacity is 100. So, I am locked it.
     protected final int capacity = 100;
+    protected Position position;
 
     //Capacity is constant value so we don't need fill the Constructor.
-    public UtilityProvider() {
+    public UtilityProvider(Position position) {
+        this.position = position;
     }
 
     //This method will show us how we are going to use the BFS.
@@ -22,7 +24,7 @@ public abstract class UtilityProvider implements Cell {
     //This method will be show us where is the utility.(Stub)
     @Override
     public Position getPosition() {
-        return null;
+        return this.position;
     }
     //This method shows us is it passable or not.(Stub)
     @Override

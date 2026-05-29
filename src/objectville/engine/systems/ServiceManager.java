@@ -51,9 +51,9 @@ public class ServiceManager {
                                 //IntelliJ recommend to use enchanted switch-case. First, I was made with "if".
                                 if (distance <= radius) {
                                     switch (type) {
-                                        case "Hospital" -> zone.setHasHospital(true);
-                                        case "School" -> zone.setHasSchool(true);
-                                        case "Police" -> zone.setHasPoliceStation(true);
+                                        case "Health" -> zone.setHasHospital(true);
+                                        case "Education" -> zone.setHasSchool(true);
+                                        case "Security" -> zone.setHasPoliceStation(true);
                                     }
                                 }
 

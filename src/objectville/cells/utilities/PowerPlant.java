@@ -5,6 +5,7 @@ import objectville.cells.Position;
 public class PowerPlant extends UtilityProvider {
     //Without Parameters.
     public PowerPlant(Position position) {
+        super(position);
     }
 
     @Override
