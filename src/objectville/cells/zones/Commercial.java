@@ -19,11 +19,15 @@ public class Commercial extends Zone {
         // Making sure about m is done before calculateOutput
         calculateM();
         //if level is 0 there is no LifeStyle
-        if (this.level== 0) {
-            this.givenLifeStyle =0;
-        } else {
-            // LifeStyle formula is level * m
-            this.givenLifeStyle = this.level * this.m;
+        if (this.level == 0) {
+            this.givenLifeStyle = 0;
+        } else if (this.level == 1) {
+            this.givenLifeStyle = this.m;
+        } else if (this.level == 2) {
+            this.givenLifeStyle = 2 * this.m;
+        } else if (this.level == 3) {
+            // Level 3: 2m + min(received population, received goods)
+            this.givenLifeStyle = (2 * this.m) + Math.min(this.receivedPopulation, this.receivedGoods);
         }
 
     }

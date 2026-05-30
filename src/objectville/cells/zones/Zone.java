@@ -4,6 +4,12 @@ import objectville.cells.Cell;
 import objectville.cells.Position;
 
 public abstract class Zone implements Cell {
+
+    //values that are needed for level 3 output, ResourceManager
+    protected int receivedPopulation = 0;
+    protected int receivedLifeStyle = 0;
+    protected int receivedGoods = 0;
+
     //zones wanted amounds at least 1
     protected int neededElectricity = 1;
     protected int neededWater = 1;
@@ -26,6 +32,20 @@ public abstract class Zone implements Cell {
     public Zone(Position position){
         this.position = position;
     }
+
+
+    //These methods are added for ResourceManager
+    public int getReceivedPopulation() {return receivedPopulation;}
+
+    public void setReceivedPopulation(int receivedPopulation) {this.receivedPopulation = receivedPopulation;}
+
+    public int getReceivedLifeStyle() {return receivedLifeStyle;}
+
+    public void setReceivedLifeStyle(int receivedLifeStyle) {this.receivedLifeStyle = receivedLifeStyle;}
+
+    public int getReceivedGoods() {return receivedGoods;}
+
+    public void setReceivedGoods(int receivedGoods) {this.receivedGoods = receivedGoods;}
 
     //These fields and methods are added for ServiceManager (
     private boolean hasSchool;

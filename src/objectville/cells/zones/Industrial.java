@@ -16,12 +16,16 @@ public class Industrial extends Zone {
         // Will generate Goods based on level and 'm'
         // Making sure about m is done before calculateOutput
         calculateM();
-        //if level is 0 there is no population
+        //if level is 0 there is no goods
         if (this.level == 0) {
             this.givenGoods = 0;
-        } else {
-            // goods formula is level * m
-            this.givenGoods = this.level * this.m;
+        } else if (this.level == 1) {
+            this.givenGoods = this.m;
+        } else if (this.level == 2) {
+            this.givenGoods = 2 * this.m;
+        } else if (this.level == 3) {
+            // Level 3: 2m + received population
+            this.givenGoods = (2 * this.m) + this.receivedPopulation;
         }
     }
 

@@ -21,9 +21,13 @@ public class Housing extends Zone{
         //if level is 0 there is no population
         if (this.level == 0) {
             this.givenPopulation = 0;
-        } else {
-            // Population formula is level * m
-            this.givenPopulation = this.level * this.m;
+        } else if (this.level == 1) {
+            this.givenPopulation = this.m;
+        } else if (this.level == 2) {
+            this.givenPopulation = 2 * this.m;
+        } else if (this.level == 3) {
+            // Level 3: 2m + received lifeStyle
+            this.givenPopulation = (2 * this.m) + this.receivedLifeStyle;
         }
     }
 
