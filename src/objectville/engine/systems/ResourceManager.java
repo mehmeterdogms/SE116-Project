@@ -8,7 +8,7 @@ import objectville.cells.zones.Industrial;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResourceManager {
+public class  ResourceManager {
 
   private int populationPool;
   private int lifestylePool;

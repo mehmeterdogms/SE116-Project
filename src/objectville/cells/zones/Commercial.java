@@ -7,6 +7,40 @@ public class Commercial extends Zone {
     }
 
     @Override
+    public void updateState(){
+        // set the level to 0 if the required utilities are not met
+        if (this.takenElectricity == 0 || this.takenWater == 0 || this.takenInternet == 0 ){
+            this.level = 0;
+        } else {
+            boolean meetsRequirements = this.takenElectricity >= this.getNeededElectricity() &&
+                    this.takenWater >= this.getNeededWater() &&
+                    this.takenInternet >= this.getNeededInternet();
+            boolean hasMarket = this.receivedGoods > 0 && this.receivedPopulation > 0;
+            if (!meetsRequirements || !hasMarket) { // Gradually reduce the level by 1 if the requirements are not met
+                this.level = Math.max(0, this.level - 1);
+            } else {
+                if (this.level == 0) {
+                    this.level = 1;
+                } else if (this.level == 1) { // Security is needed for level 2
+                    if (this.HasPoliceStation()) {
+                        this.level = 2;
+                    }
+                } else if (this.level == 2) { //excess population and excess goods are needed for lvl3
+                    if (this.HasPoliceStation() && this.receivedPopulation > 0 && this.receivedGoods > 0) {
+                        this.level = 3;
+                    }
+                } else if (this.level == 3) { // Cheks if it still has security and other necessities  to hold its level 3 status
+                    if (!this.HasPoliceStation() || this.receivedPopulation == 0 || this.receivedGoods == 0) {
+                        this.level = 2;
+                    }
+                }
+            }
+
+        }
+        this.calculateOutput();
+    }
+
+    @Override
     public int calculateM() {
         // commercial zones needs all three utilities
         int minElcWat = Math.min(takenElectricity, takenWater);
