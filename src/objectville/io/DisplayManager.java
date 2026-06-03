@@ -58,4 +58,8 @@ public class DisplayManager {
         }
 
     }
+    //This method should be done(EMPTY METHOD).
+    public void logLevelDown(Zone zone, int oldLevel, int newLevel) {
+
+    }
 }
