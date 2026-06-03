@@ -5,8 +5,8 @@ import objectville.cells.zones.Commercial;
 import objectville.cells.zones.Housing;
 import objectville.cells.zones.Industrial;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class  ResourceManager {
 
@@ -20,19 +20,16 @@ public class  ResourceManager {
 
           if ( cell instanceof Housing ){
        Housing house = (Housing) cell;
-       house.calculateOutput();
        populationPool +=house.getGivenPopulation();
           }
 
           else if (cell instanceof Industrial){
               Industrial industrial = (Industrial) cell;
-              industrial.calculateOutput();
               goodsPool += industrial.getGivenGoods();
           }
 
           else if (cell instanceof Commercial){
               Commercial commercial = (Commercial) cell;
-              commercial.calculateOutput();
               lifestylePool += commercial.getGivenLifeStyle();
           }
       }
@@ -41,17 +38,21 @@ public class  ResourceManager {
    public void distributePreviousTickResources (List <Cell> cells){
 
       // separates the cells into lists for distribution
-       List <Cell> housingCells = cells.stream()
-               .filter(c -> c instanceof Housing)
-               .collect(Collectors.toList()); // can changed to toList in latest
+     List<Cell> housingCells = new ArrayList<>();
+     List<Cell> industrialCells = new ArrayList<>();
+     List<Cell> commercialCells = new ArrayList<>();
 
-      List <Cell> industrialCells = cells.stream()
-              .filter(c -> c instanceof Industrial)
-              .collect(Collectors.toList());
 
-      List <Cell> commercialCells = cells.stream()
-              .filter(c -> c instanceof Commercial)
-              .collect(Collectors.toList());
+       // IntelliJ suggested using Stream API, but I replaced it with a single loop because it is not covered in the lecture slides
+     for ( Cell cell : cells){
+         if(cell instanceof Housing){
+             housingCells.add(cell);
+         } else if ( cell instanceof Industrial){
+             industrialCells.add(cell);
+         } else if ( cell instanceof Commercial){
+             commercialCells.add(cell);
+         }
+     }
 
       int totalWorkerZones = industrialCells.size() + commercialCells.size();
 
