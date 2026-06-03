@@ -20,7 +20,8 @@ public class UtilitySystem{
         }
         Cell neighbor = map[nextX][nextY];
         //if neighbor is a road, energy flows freely without losing any capacity
-        if (neighbor instanceof Road){
+        // I have added utility providers too because if I didn't it will cause a fail (EmptyCell) at distribution
+        if (neighbor instanceof Road || neighbor instanceof UtilityProvider){
             lookedCells[nextX][nextY] = true;
             cellToVisit.add(neighbor.getPosition());
         }
