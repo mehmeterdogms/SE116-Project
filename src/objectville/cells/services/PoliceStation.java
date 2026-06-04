@@ -1,5 +1,4 @@
 package objectville.cells.services;
-
 import objectville.cells.Position;
 
 public class PoliceStation extends ServiceBuilding {
@@ -7,7 +6,6 @@ public class PoliceStation extends ServiceBuilding {
     public PoliceStation(Position position) {
         super(5, position, 'F');
     }
-
     @Override
     public String getServiceType() {
         return "Security";

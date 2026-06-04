@@ -1,5 +1,4 @@
 package objectville.cells.services;
-
 import objectville.cells.Position;
 
 public class School extends ServiceBuilding {
@@ -9,6 +8,7 @@ public class School extends ServiceBuilding {
     }
 
     @Override
+
     public String getServiceType() {
         return "Education";
     }

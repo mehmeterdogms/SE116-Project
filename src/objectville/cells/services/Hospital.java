@@ -1,5 +1,4 @@
 package objectville.cells.services;
-
 import objectville.cells.Position;
 
 public class Hospital extends ServiceBuilding {

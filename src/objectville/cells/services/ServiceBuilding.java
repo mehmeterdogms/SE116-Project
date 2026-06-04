@@ -1,5 +1,4 @@
 package objectville.cells.services;
-
 import objectville.cells.Cell;
 import objectville.cells.Position;
 
@@ -13,7 +12,6 @@ public abstract class ServiceBuilding implements Cell {
         this.position = position;
         this.symbol = symbol;
     }
-
     // Returns the type of service this building provides
     public abstract String getServiceType();
 
@@ -36,6 +34,7 @@ public abstract class ServiceBuilding implements Cell {
     public boolean isPassable() {
         return false;
     }
+
 
     @Override
     public void updateState() {
