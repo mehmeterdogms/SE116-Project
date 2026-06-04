@@ -28,6 +28,7 @@ public class GameEngine {
         this.resourceManager = new ResourceManager();
         this.displayManager = new DisplayManager();
     }
+
     //This method turns to Cell[][] to arraylist.
     public List<Cell> getCellsAsList() {
         List<Cell> cellList = new ArrayList<>();
@@ -40,6 +41,7 @@ public class GameEngine {
         }
         return cellList;
     }
+
     //This is where the actual game engine runs. Not so much thing.
     public void runSimulation(int totalTicks) {
         for (int i = 1; i <= totalTicks; i++) {
@@ -56,21 +58,25 @@ public class GameEngine {
                         //Down-casting the Cell interface.
                         Zone zone = (Zone) map[j][k];
                         int oldLevel = zone.getLevel();
+                        // First level printing.
+                        zone.updateState();
 
                         //We want to look like "output.txt" so I made like this:
-                        switch (zone) {
-                            case Housing house ->
-                                    displayManager.logResourceGenerated(zone, "population", house.getGivenPopulation());
-                            case Industrial ind ->
-                                    displayManager.logResourceGenerated(zone, "goods", ind.getGivenGoods());
-                            case Commercial com ->
-                                    displayManager.logResourceGenerated(zone, "lifestyle", com.getGivenLifeStyle());
-                            default -> {
-                            }
+                        if (zone instanceof Housing) {
+                            Housing house = (Housing) zone;
+                            house.calculateOutput();
+                            displayManager.logResourceGenerated(zone, "population", house.getGivenPopulation());
+                        } else if (zone instanceof Industrial) {
+                            Industrial ind = (Industrial) zone;
+                            ind.calculateOutput();
+                            displayManager.logResourceGenerated(zone, "goods", ind.getGivenGoods());
+                        } else if (zone instanceof Commercial) {
+                            Commercial com = (Commercial) zone;
+                            com.calculateOutput();
+                            displayManager.logResourceGenerated(zone, "lifestyle", com.getGivenLifeStyle());
                         }
 
                         //If level changes, we are saved on top.
-                        zone.updateState();
                         int newLevel = zone.getLevel();
 
                         //Level ups logs.

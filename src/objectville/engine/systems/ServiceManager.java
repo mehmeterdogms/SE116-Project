@@ -3,6 +3,7 @@ package objectville.engine.systems;
 import objectville.cells.Cell;
 import objectville.cells.Position;
 import objectville.cells.services.ServiceBuilding;
+import objectville.cells.zones.Housing;
 import objectville.cells.zones.Zone;
 import objectville.io.DisplayManager;
 
@@ -53,15 +54,21 @@ public class ServiceManager {
                                 //We are using DisplayManager for the log.
                                 if (distance <= radius) {
                                     switch (type) {
-                                        case "Health" -> {
-                                            zone.setHasHospital(true);
-                                            displayManager.logServiceReceived(zone, "health");
+                                        case "Health" -> {//Health service only for housing
+                                            if (zone instanceof Housing) {
+                                                zone.setHasHospital(true);
+                                                displayManager.logServiceReceived(zone, "health");
+                                            }
+
                                         }
-                                        case "Education" -> {
-                                            zone.setHasSchool(true);
-                                            displayManager.logServiceReceived(zone, "education");
+                                        case "Education" -> {//Health education only for housing
+                                            if (zone instanceof Housing) {
+                                                zone.setHasSchool(true);
+                                                displayManager.logServiceReceived(zone, "education");
+                                            }
+
                                         }
-                                        case "Security" -> {
+                                        case "Security" -> {//Security for all building
                                             zone.setHasPoliceStation(true);
                                             displayManager.logServiceReceived(zone, "security");
                                         }
