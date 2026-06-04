@@ -6,11 +6,12 @@ import objectville.cells.utilities.UtilityProvider;
 import objectville.cells.zones.Zone;
 import java.util.ArrayList;
 import objectville.cells.infrastructure.Road;
+import objectville.io.DisplayManager;
 
 public class UtilitySystem{
     //I am making a method for not writing the same thing again and again in if's
     //it's for checking neighbor cells and give utility or continue with road
-    public void checkNeighbor(Cell[][] map, int nextX, int nextY, String type, boolean[][] lookedCells, ArrayList<Position> cellToVisit, int[] globalCapacity){
+    public void checkNeighbor(Cell[][] map, int nextX, int nextY, String type, boolean[][] lookedCells, ArrayList<Position> cellToVisit, int[] globalCapacity, DisplayManager displayManager){
         if (globalCapacity[0] <= 0) {
             return;
         }
@@ -44,6 +45,8 @@ public class UtilitySystem{
             int deliveredEnergy = Math.min(globalCapacity[0], required);
 
             if(deliveredEnergy > 0) {
+                //Utility Logs.
+                displayManager.logResourceReceived(zone, type.toLowerCase(), deliveredEnergy);
                 //adding on top because otherwise we can lose some value if there are more than 1 provider
                 if (type.equals("Electricity")){
                     zone.setTakenElectricity(zone.getTakenElectricity() + deliveredEnergy);
@@ -64,7 +67,7 @@ public class UtilitySystem{
     }
 
     //bfs algorithm to deliver utility
-    public void BFS(Cell[][] map, Position startPos,String type, int startCapacity){
+    public void BFS(Cell[][] map, Position startPos,String type, int startCapacity, DisplayManager displayManager){
         int rows = map.length;
         int cols = map[0].length;
         //Listing cells that looked to prevent infinite loops
@@ -93,20 +96,20 @@ public class UtilitySystem{
             //in BFS a random order has been written since it is not specified in the instructions (left to right).
             //upper neighbor
             if (currentX - 1 >= 0) {
-                checkNeighbor(map, currentX - 1, currentY, type, lookedCells, cellToVisit, globalCapacity);
+                checkNeighbor(map, currentX - 1, currentY, type, lookedCells, cellToVisit, globalCapacity, displayManager);
             }
             //right neighbor
             if (currentY + 1 < cols) {
-                checkNeighbor(map, currentX, currentY + 1, type, lookedCells, cellToVisit, globalCapacity);
+                checkNeighbor(map, currentX, currentY + 1, type, lookedCells, cellToVisit, globalCapacity, displayManager);
             }
             //down neighbor
             if (currentX + 1 < rows) {
-                checkNeighbor(map, currentX + 1, currentY, type, lookedCells, cellToVisit, globalCapacity);
+                checkNeighbor(map, currentX + 1, currentY, type, lookedCells, cellToVisit, globalCapacity, displayManager);
             }
 
             //left neighbor
             if (currentY - 1 >= 0) {
-                checkNeighbor(map, currentX, currentY - 1, type, lookedCells, cellToVisit, globalCapacity);
+                checkNeighbor(map, currentX, currentY - 1, type, lookedCells, cellToVisit, globalCapacity, displayManager);
             }
 
 
@@ -114,7 +117,7 @@ public class UtilitySystem{
     }
 
 
-    public void distributeUtilities(Cell[][] map){
+    public void distributeUtilities(Cell[][] map, DisplayManager displayManager){
         int rows = map.length;
         //start whit 0. col
         int cols = map[0].length;
@@ -140,8 +143,8 @@ public class UtilitySystem{
                 if (currentCell instanceof UtilityProvider) {
                     UtilityProvider provider = (UtilityProvider) currentCell;
                     String type = provider.getProvidedUtilityType();
-
-                    BFS(map, provider.getPosition(), type, 100);
+                    //Added displayManager(log).
+                    BFS(map, provider.getPosition(), type, 100, displayManager);
                 }
             }
         }

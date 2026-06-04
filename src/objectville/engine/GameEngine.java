@@ -45,10 +45,10 @@ public class GameEngine {
         for (int i = 1; i <= totalTicks; i++) {
             //I did it this way so it would look like "output.txt".
             System.out.println("Tick " + i);
-            serviceManager.distributeServices(map);
-            utilitySystem.distributeUtilities(map);
+            serviceManager.distributeServices(map, displayManager);
+            utilitySystem.distributeUtilities(map, displayManager);
             if (i > 1) {
-                resourceManager.distributePreviousTickResources(getCellsAsList());
+                resourceManager.distributePreviousTickResources(getCellsAsList(), displayManager);
             }
             for (int j = 0; j < map.length; j++) {
                 for (int k = 0; k < map[j].length; k++) {
@@ -57,18 +57,22 @@ public class GameEngine {
                         Zone zone = (Zone) map[j][k];
                         int oldLevel = zone.getLevel();
 
+                        //We want to look like "output.txt" so I made like this:
+                        switch (zone) {
+                            case Housing house ->
+                                    displayManager.logResourceGenerated(zone, "population", house.getGivenPopulation());
+                            case Industrial ind ->
+                                    displayManager.logResourceGenerated(zone, "goods", ind.getGivenGoods());
+                            case Commercial com ->
+                                    displayManager.logResourceGenerated(zone, "lifestyle", com.getGivenLifeStyle());
+                            default -> {
+                            }
+                        }
+
                         //If level changes, we are saved on top.
                         zone.updateState();
                         int newLevel = zone.getLevel();
 
-                        //We want to look like "output.txt" so I made like this:
-                        if (zone instanceof Housing) {
-                            displayManager.logResourceGenerated(zone, "population", ((Housing)zone).getGivenPopulation());
-                        } else if (zone instanceof Industrial) {
-                            displayManager.logResourceGenerated(zone, "goods", ((Industrial)zone).getGivenGoods());
-                        } else if (zone instanceof Commercial) {
-                            displayManager.logResourceGenerated(zone, "lifestyle", ((Commercial)zone).getGivenLifeStyle());
-                        }
                         //Level ups logs.
                         if (newLevel > oldLevel) {
                             displayManager.logLevelUp(zone, oldLevel, newLevel);

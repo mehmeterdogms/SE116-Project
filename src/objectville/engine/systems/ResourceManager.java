@@ -4,6 +4,8 @@ import objectville.cells.Cell;
 import objectville.cells.zones.Commercial;
 import objectville.cells.zones.Housing;
 import objectville.cells.zones.Industrial;
+import objectville.cells.zones.Zone;
+import objectville.io.DisplayManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ public class  ResourceManager {
   private int populationPool;
   private int lifestylePool;
   private int goodsPool;
-
+  //We don't need to use displayManager here, we already log the sources in GameManager.
   // With each tick, generated resources by zones are stored in pools
   public void poolResources(List<Cell> cells){
       for (Cell cell: cells){
@@ -35,7 +37,7 @@ public class  ResourceManager {
       }
   }
 
-   public void distributePreviousTickResources (List <Cell> cells){
+   public void distributePreviousTickResources (List <Cell> cells, DisplayManager displayManager){
 
       // separates the cells into lists for distribution
      List<Cell> housingCells = new ArrayList<>();
@@ -62,10 +64,16 @@ public class  ResourceManager {
 
           for (Cell cell : industrialCells){
               ((Industrial) cell ).setReceivedPopulation(populationPerZone);
+            if (populationPerZone > 0) {
+              displayManager.logResourceReceived((Zone) cell, "population", populationPerZone);
+            }
           }
 
           for ( Cell cell : commercialCells){
               ((Commercial) cell).setReceivedPopulation(populationPerZone);
+            if (populationPerZone > 0) {
+              displayManager.logResourceReceived((Zone) cell, "population", populationPerZone);
+            }
           }
           // saves the remaining resources for the next tick
           populationPool %= totalWorkerZones;
@@ -75,8 +83,11 @@ public class  ResourceManager {
       if ( commercialCells.size() > 0){
           int goodsPerZone = goodsPool / commercialCells.size();
 
-          for ( Cell cell : commercialCells ){
-              ((Commercial)cell).setReceivedGoods(goodsPerZone);
+          for ( Cell cell : commercialCells ) {
+              ((Commercial) cell).setReceivedGoods(goodsPerZone);
+              if (goodsPerZone > 0) {
+                  displayManager.logResourceReceived((Zone) cell, "goods", goodsPerZone);
+              }
           }
             goodsPool %= commercialCells.size();
       }
@@ -85,8 +96,11 @@ public class  ResourceManager {
       if (housingCells.size() > 0){
           int lifestylePerZone = lifestylePool / housingCells.size();
 
-          for (Cell cell : housingCells){
-              ((Housing)cell).setReceivedLifeStyle(lifestylePerZone);
+          for (Cell cell : housingCells) {
+              ((Housing) cell).setReceivedLifeStyle(lifestylePerZone);
+              if (lifestylePerZone > 0) {
+                  displayManager.logResourceReceived((Zone) cell, "lifestyle", lifestylePerZone);
+              }
           }
           lifestylePool %= housingCells.size();
       }

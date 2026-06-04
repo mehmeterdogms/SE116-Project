@@ -4,6 +4,7 @@ import objectville.cells.Cell;
 import objectville.cells.Position;
 import objectville.cells.services.ServiceBuilding;
 import objectville.cells.zones.Zone;
+import objectville.io.DisplayManager;
 
 public class ServiceManager {
     // I calculate distance with Manhattan formula.
@@ -13,7 +14,7 @@ public class ServiceManager {
         return x + y;
     }
 
-    public void distributeServices(Cell[][] map) {
+    public void distributeServices(Cell[][] map, DisplayManager displayManager) {
         //Cleaning for tick system.
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
@@ -49,11 +50,21 @@ public class ServiceManager {
 
                                 int distance = calculateDistance(positionBuilding, positionZone);
                                 //IntelliJ recommend to use enchanted switch-case. First, I was made with "if".
+                                //We are using DisplayManager for the log.
                                 if (distance <= radius) {
                                     switch (type) {
-                                        case "Health" -> zone.setHasHospital(true);
-                                        case "Education" -> zone.setHasSchool(true);
-                                        case "Security" -> zone.setHasPoliceStation(true);
+                                        case "Health" -> {
+                                            zone.setHasHospital(true);
+                                            displayManager.logServiceReceived(zone, "health");
+                                        }
+                                        case "Education" -> {
+                                            zone.setHasSchool(true);
+                                            displayManager.logServiceReceived(zone, "education");
+                                        }
+                                        case "Security" -> {
+                                            zone.setHasPoliceStation(true);
+                                            displayManager.logServiceReceived(zone, "security");
+                                        }
                                     }
                                 }
 
