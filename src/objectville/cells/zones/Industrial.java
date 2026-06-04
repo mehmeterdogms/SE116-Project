@@ -19,8 +19,8 @@ public class Industrial extends Zone {
        } else {
            boolean meetsRequirements = this.takenElectricity >= this.getNeededElectricity() &&
                    this.takenWater >= this.getNeededWater();
-           boolean WorkForce  = this.receivedPopulation > 0;
-           if (!meetsRequirements || !WorkForce){
+
+           if (!meetsRequirements){
                this.level = Math.max(0, this.level - 1);
            } else  {
                if ( this.level == 0){
@@ -40,7 +40,7 @@ public class Industrial extends Zone {
                }
            }
        }
-       this.calculateOutput();
+
     }
 
     @Override

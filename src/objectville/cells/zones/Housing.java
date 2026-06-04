@@ -32,7 +32,7 @@ public class Housing extends Zone{
                 }
             }
         }
-        this.calculateOutput(); // calculate the new population after the update
+
     }
 
     public Housing(Position position){

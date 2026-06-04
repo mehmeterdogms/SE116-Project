@@ -15,8 +15,7 @@ public class Commercial extends Zone {
             boolean meetsRequirements = this.takenElectricity >= this.getNeededElectricity() &&
                     this.takenWater >= this.getNeededWater() &&
                     this.takenInternet >= this.getNeededInternet();
-            boolean hasMarket = this.receivedGoods > 0 && this.receivedPopulation > 0;
-            if (!meetsRequirements || !hasMarket) { // Gradually reduce the level by 1 if the requirements are not met
+            if (!meetsRequirements ) { // Gradually reduce the level by 1 if the requirements are not met
                 this.level = Math.max(0, this.level - 1);
             } else {
                 if (this.level == 0) {
@@ -37,7 +36,7 @@ public class Commercial extends Zone {
             }
 
         }
-        this.calculateOutput();
+
     }
 
     @Override
