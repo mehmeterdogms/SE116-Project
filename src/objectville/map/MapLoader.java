@@ -30,6 +30,9 @@ public class MapLoader {
     public static Cell[][] loadMap(Path filePath){
         List <char[]> lines = new ArrayList<>(); //changed string to char based on the sample input
 
+
+        int maxColumns = 0;
+
         //read file line by line, ignoring empty lines
         try (BufferedReader bufferedReader = Files.newBufferedReader(filePath)){
           String line;
@@ -49,6 +52,10 @@ public class MapLoader {
                     //will be used, it will be wrong
                     char[] tokens = line.replace(" ", "").toCharArray();
                     lines.add(tokens);
+
+                    if (tokens.length > maxColumns){
+                        maxColumns = tokens.length;
+                    }
                 }
             }
         }
@@ -66,7 +73,7 @@ public class MapLoader {
 
         //Defining Array dimensions
         int rows = lines.size();
-        int columns = lines.get(0).length;
+        int columns = maxColumns;
         Cell[][] gameMap = new Cell[rows][columns];
 
         // r (rows) represents y-axis, c (columns) represents x-axis

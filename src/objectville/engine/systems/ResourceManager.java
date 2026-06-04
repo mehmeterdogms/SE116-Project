@@ -75,8 +75,8 @@ public class  ResourceManager {
               displayManager.logResourceReceived((Zone) cell, "population", populationPerZone);
             }
           }
-          // saves the remaining resources for the next tick
-          populationPool %= totalWorkerZones;
+          // Remaining resources are lost as cost of distribution
+          populationPool = 0;
       }
 
       // distribute goods to commercial zones
@@ -89,7 +89,7 @@ public class  ResourceManager {
                   displayManager.logResourceReceived((Zone) cell, "goods", goodsPerZone);
               }
           }
-            goodsPool %= commercialCells.size();
+            goodsPool = 0;
       }
 
       //distributes lifestyle to housing zones
@@ -102,7 +102,7 @@ public class  ResourceManager {
                   displayManager.logResourceReceived((Zone) cell, "lifestyle", lifestylePerZone);
               }
           }
-          lifestylePool %= housingCells.size();
+          lifestylePool = 0;
       }
    }
 }
