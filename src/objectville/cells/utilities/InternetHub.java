@@ -9,7 +9,7 @@ public class InternetHub extends UtilityProvider {
     }
     @Override
     public String getProvidedUtilityType() {
-        return "Internet";//Provide type.
+        return "İnternet";//Provide type.
     }
 
     @Override

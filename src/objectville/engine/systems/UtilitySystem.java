@@ -36,7 +36,7 @@ public class UtilitySystem{
                 required = zone.getNeededElectricity()- zone.getTakenElectricity();
             } else if (type.equals("Water")) {
                 required = zone.getNeededWater()- zone.getTakenWater();
-            } else if (type.equals("Internet")) {
+            } else if (type.equals("İnternet")) {
                 required = zone.getNeededInternet()- zone.getTakenInternet();
             }
             //required must never be negative if it is we should reset to 0
@@ -52,7 +52,7 @@ public class UtilitySystem{
                     zone.setTakenElectricity(zone.getTakenElectricity() + deliveredEnergy);
                 } else if (type.equals("Water")) {
                     zone.setTakenWater(zone.getTakenWater() + deliveredEnergy);
-                } else if (type.equals("Internet")){
+                } else if (type.equals("İnternet")){
                     zone.setTakenInternet(zone.getTakenInternet() + deliveredEnergy);
                 }
             }
